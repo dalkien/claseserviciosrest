@@ -1,0 +1,30 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: claseservice
+  profiles:
+    active: active
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+  jpa:
+    show-sql: true
+logging:
+  level:
+    org:
+      example: debug
+management:
+  endpoint:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    distribution:
+      percentiles:
+        histogram:
+          http:
+            server:
+              request: true
+logstash:
+  host: localhost

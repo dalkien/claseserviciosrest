@@ -1,4 +1,4 @@
-package com.co.test.clases.claseserviciosrest;
+package com.co.test.clases.claseserviciosrest.dto;
 
 public class Respuesta {
 
