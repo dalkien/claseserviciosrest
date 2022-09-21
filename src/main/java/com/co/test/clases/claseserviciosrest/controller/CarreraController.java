@@ -3,9 +3,11 @@ package com.co.test.clases.claseserviciosrest.controller;
 import com.co.test.clases.claseserviciosrest.entity.InscripcionEntity;
 import com.co.test.clases.claseserviciosrest.entity.MonedaEntity;
 import com.co.test.clases.claseserviciosrest.entity.PaisEntity;
+import com.co.test.clases.claseserviciosrest.entity.ParticipanteEntity;
 import com.co.test.clases.claseserviciosrest.service.InscripcionService;
 import com.co.test.clases.claseserviciosrest.service.MonedaService;
 import com.co.test.clases.claseserviciosrest.service.PaisService;
+import com.co.test.clases.claseserviciosrest.service.ParticipanteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,11 +27,14 @@ public class CarreraController {
 
     private final InscripcionService inscripcionService;
 
+    private final ParticipanteService participanteService;
+
     @Autowired
-    public CarreraController(MonedaService monedaService, PaisService paisService, InscripcionService inscripcionService) {
+    public CarreraController(MonedaService monedaService, PaisService paisService, InscripcionService inscripcionService, ParticipanteService participanteService) {
         this.monedaService = monedaService;
         this.paisService = paisService;
         this.inscripcionService = inscripcionService;
+        this.participanteService = participanteService;
     }
 
     @PostMapping("createMoneda")
@@ -97,6 +102,16 @@ public class CarreraController {
     @PostMapping("incripcion/crear")
     public String crearIncripcion (@RequestBody InscripcionEntity variable2){
         return inscripcionService.creacionDatos(variable2);
+    }
+
+    @GetMapping("getParticipante/{id}")
+    public ParticipanteEntity getParticipante(@PathVariable("id") int id){
+        return  participanteService.findByid(id).orElse(new ParticipanteEntity());
+    }
+
+    @PostMapping("createParticipante")
+    public String createParticipante(@RequestBody ParticipanteEntity participanteEntity){
+        return  participanteService.createParticipante(participanteEntity);
     }
 
 }

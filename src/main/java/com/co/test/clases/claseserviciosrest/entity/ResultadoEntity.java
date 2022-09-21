@@ -34,12 +34,12 @@ public class ResultadoEntity {
     @Column(name = "detalle_premio")
     private String detallePremio;
 
-    @ManyToOne
+/*    @ManyToOne
     @JoinColumn(name = "idParticipante", nullable = false)
     private ParticipanteEntity participante;
 
     @ManyToOne
     @JoinColumn(name = "idInscripcion", nullable = false)
-    private InscripcionEntity inscripcion;
+    private InscripcionEntity inscripcion;*/
 
 }

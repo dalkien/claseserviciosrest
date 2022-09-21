@@ -27,8 +27,8 @@ public class PaisEntity {
     @Column(name = "id_moneda")
     private int idMoneda;
 
-    @ManyToOne
+/*    @ManyToOne
     @JoinColumn(name="id_moneda", nullable=false)
-    private MonedaEntity monedaEntity;
+    private MonedaEntity monedaEntity;*/
 
 }

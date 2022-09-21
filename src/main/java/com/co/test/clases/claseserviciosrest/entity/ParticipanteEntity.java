@@ -37,12 +37,12 @@ public class ParticipanteEntity {
     @Column(name = "sexo")
     private String sexo;
 
-    @ManyToOne
+/*    @ManyToOne
     @JoinColumn(name = "idCategoria", nullable = false)
     private CategoriaEntity categoria;
 
     @ManyToOne
     @JoinColumn(name = "idNacionalidad", nullable = false)
-    private PaisEntity pais;
+    private PaisEntity pais;*/
 
 }

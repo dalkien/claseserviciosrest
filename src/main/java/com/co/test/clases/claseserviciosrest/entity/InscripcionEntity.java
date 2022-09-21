@@ -36,11 +36,11 @@ public class InscripcionEntity {
     @Column(name = "fecha_carrera")
     private Date fechaCarrera;
 
-    @ManyToOne
+/*    @ManyToOne
     @JoinColumn(name = "idParticipante", nullable = false, insertable = false, updatable = false)
     private ParticipanteEntity participante;
 
     @ManyToOne
     @JoinColumn(name = "idCategoria", nullable = false, insertable = false, updatable = false)
-    private CategoriaEntity categoria;
+    private CategoriaEntity categoria;*/
 }
