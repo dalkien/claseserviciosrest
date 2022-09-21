@@ -1,7 +1,9 @@
 package com.co.test.clases.claseserviciosrest.controller;
 
+import com.co.test.clases.claseserviciosrest.entity.InscripcionEntity;
 import com.co.test.clases.claseserviciosrest.entity.MonedaEntity;
 import com.co.test.clases.claseserviciosrest.entity.PaisEntity;
+import com.co.test.clases.claseserviciosrest.service.InscripcionService;
 import com.co.test.clases.claseserviciosrest.service.MonedaService;
 import com.co.test.clases.claseserviciosrest.service.PaisService;
 import lombok.extern.slf4j.Slf4j;
@@ -21,10 +23,13 @@ public class CarreraController {
     private final MonedaService monedaService;
     private final PaisService paisService;
 
+    private final InscripcionService inscripcionService;
+
     @Autowired
-    public CarreraController(MonedaService monedaService, PaisService paisService) {
+    public CarreraController(MonedaService monedaService, PaisService paisService, InscripcionService inscripcionService) {
         this.monedaService = monedaService;
         this.paisService = paisService;
+        this.inscripcionService = inscripcionService;
     }
 
     @PostMapping("createMoneda")
@@ -85,5 +90,13 @@ public class CarreraController {
         return paisService.getPaisById(id).orElse(new PaisEntity());
     }
 
+    @GetMapping ("Inscripcion/{id}")
+    public InscripcionEntity getInscripcion(@PathVariable("id")int id){
+        return inscripcionService.consultaInscripcion(id).orElse(new InscripcionEntity());
+    }
+    @PostMapping("incripcion/crear")
+    public String crearIncripcion (@RequestBody InscripcionEntity variable2){
+        return inscripcionService.creacionDatos(variable2);
+    }
 
 }
