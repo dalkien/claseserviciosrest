@@ -1,6 +1,6 @@
 package com.co.test.clases.claseserviciosrest.service;
 
-import com.co.test.clases.claseserviciosrest.entity.Moneda;
+import com.co.test.clases.claseserviciosrest.entity.MonedaEntity;
 import com.co.test.clases.claseserviciosrest.repository.MonedaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,25 +26,25 @@ public class MonedaService {
      * d -> delete -> es una eliminacion de registros en tablas
      */
 
-    public List<Moneda> findAllMonedas(){
+    public List<MonedaEntity> findAllMonedas(){
         return repository.findAll();
     }
 
-    public Optional<Moneda> findById(int id){
+    public Optional<MonedaEntity> findById(int id){
         return repository.findById(id);
     }
 
-    public String createMoneda(Moneda moneda){
-        repository.save(moneda);
-        return "exitoso!!!";
+    public String createMoneda(MonedaEntity monedaEntity){
+        repository.save(monedaEntity);
+        return "exitoso!!!" ;
     }
 
-    public Moneda updateMoneda(Moneda moneda){
-        return repository.save(moneda);
+    public MonedaEntity updateMoneda(MonedaEntity monedaEntity){
+        return repository.save(monedaEntity);
     }
 
-    public String deleteMoneda(Moneda moneda){
-        repository.delete(moneda);
+    public String deleteMoneda(MonedaEntity monedaEntity){
+        repository.delete(monedaEntity);
         return "borrado Exitoso!!!";
     }
 

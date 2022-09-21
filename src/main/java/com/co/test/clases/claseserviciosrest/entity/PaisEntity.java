@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Pais {
+public class PaisEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
@@ -22,8 +22,13 @@ public class Pais {
     @Basic
     @Column(name = "cod_pais")
     private String codPais;
+
     @Basic
     @Column(name = "id_moneda")
     private int idMoneda;
+
+    @ManyToOne
+    @JoinColumn(name="id_moneda", nullable=false)
+    private MonedaEntity monedaEntity;
 
 }

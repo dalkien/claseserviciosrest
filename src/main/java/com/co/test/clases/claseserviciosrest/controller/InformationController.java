@@ -1,15 +1,9 @@
 package com.co.test.clases.claseserviciosrest.controller;
 
 import com.co.test.clases.claseserviciosrest.dto.Respuesta;
-import com.co.test.clases.claseserviciosrest.entity.Moneda;
-import com.co.test.clases.claseserviciosrest.entity.Pais;
-import com.co.test.clases.claseserviciosrest.service.MonedaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 @RestController
@@ -17,11 +11,9 @@ import java.util.List;
 @Slf4j
 public class InformationController {
 
-    private final MonedaService monedaService;
 
     @Autowired
-    public InformationController(MonedaService monedaService) {
-        this.monedaService = monedaService;
+    public InformationController() {
     }
 
     /**
@@ -66,63 +58,6 @@ public class InformationController {
         Respuesta rta = new Respuesta(tipo,docu);
         //return "informacion recuperada con el tipo : " + tipo + " documento: " + docu;
         return rta;
-    }
-
-    @PostMapping("createMoneda")
-    @ResponseStatus(HttpStatus.CREATED)
-    public String createMoneda(@RequestBody Moneda moneda){
-        log.info("ingreso a operacion create moneda");
-        return monedaService.createMoneda(moneda);
-    }
-
-    @GetMapping("getMoneda/{id}")
-    public Moneda getMoneda(@PathVariable("id") int id ){
-
-        return monedaService.findById(id)
-                .orElse(new Moneda());
-        /**
-         * Optional<Moneda> mon =  monedaService.findById(id);
-         * if(mon.get() == null){
-         *     return new Moneda();
-         * } else{
-         *     return mon.get();
-         * }
-         */
-
-        /*return monedaService.findAllMonedas()
-                .stream().filter(x -> x.getId() == id)
-                .findAny().orElse(new Moneda()); */
-
-        /**
-         * codigo de uso secuencial
-         *  List<Moneda> mon = monedaService.findAllMonedas();
-         *  Moneda monedaReturn = new Moneda();
-         *  for(int i = o; i < mon.size(); i++ ){
-         *      if(mon.get(i).getId() == id  ){
-         *          //return moneda.get(i);
-         *          monedaReturn = moneda.get(i);
-         *      }
-         *  }
-         *  return monedaReturn;
-         *
-         */
-    }
-
-    @GetMapping("findAll")
-    public List<Moneda> findAllMoneda(){
-        return monedaService.findAllMonedas();
-    }
-
-    @GetMapping("getPais")
-    public Pais getPais(){
-        Pais pais = new Pais();
-        pais.setId(1);
-        pais.setNombrePais("Colombia");
-        pais.setCodPais("CO");
-        pais.setIdMoneda(1);
-        log.info(pais.toString());
-        //monedaService.findById(pais.getIdMoneda());
-        return pais;
     }
 
 }
