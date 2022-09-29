@@ -8,13 +8,18 @@ import com.co.test.clases.claseserviciosrest.service.InscripcionService;
 import com.co.test.clases.claseserviciosrest.service.MonedaService;
 import com.co.test.clases.claseserviciosrest.service.PaisService;
 import com.co.test.clases.claseserviciosrest.service.ParticipanteService;
+import com.co.test.clases.claseserviciosrest.utils.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.function.EntityResponse;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Transactional
 @RestController
@@ -96,8 +101,13 @@ public class CarreraController {
     }
 
     @GetMapping ("Inscripcion/{id}")
-    public InscripcionEntity getInscripcion(@PathVariable("id")int id){
-        return inscripcionService.consultaInscripcion(id).orElse(new InscripcionEntity());
+  //  public InscripcionEntity getInscripcion(@PathVariable("id")int id){
+    public ResponseEntity getInscripcion(@PathVariable("id")int id){
+        //String str = null;
+        //boolean concat = str.equals("x");
+        //return inscripcionService.consultaInscripcion(id).orElse(new InscripcionEntity());
+        return inscripcionService.consultaInscripcion(id).map(u -> ResponseEntity.ok(u))
+                .orElse(ResponseEntity.notFound().build());
     }
     @PostMapping("incripcion/crear")
     public String crearIncripcion (@RequestBody InscripcionEntity variable2){
@@ -114,4 +124,19 @@ public class CarreraController {
         return  participanteService.createParticipante(participanteEntity);
     }
 
+    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(NullPointerException.class)
+    public Map<String, String> handlerErros(NullPointerException ex){
+        Map<String, String> respnseError = new HashMap<>();
+        respnseError.put(ErrorResponse.ERROR_DATA.errorname(), ErrorResponse.ERROR_DATA.errorDescrition());
+        return respnseError;
+    }
+
+    @ResponseStatus(code = HttpStatus.NOT_FOUND)
+    @ExceptionHandler(Exception.class)
+    public Map<String, String> handlerErros(Exception ex){
+        Map<String, String> respnseError = new HashMap<>();
+        respnseError.put(ErrorResponse.NOT_FOUND_DATA.errorname(), ErrorResponse.NOT_FOUND_DATA.errorDescrition());
+        return respnseError;
+    }
 }
