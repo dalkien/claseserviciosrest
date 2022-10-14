@@ -4,11 +4,11 @@ import com.co.test.clases.claseserviciosrest.entity.InscripcionEntity;
 import com.co.test.clases.claseserviciosrest.entity.MonedaEntity;
 import com.co.test.clases.claseserviciosrest.entity.PaisEntity;
 import com.co.test.clases.claseserviciosrest.entity.ParticipanteEntity;
-import com.co.test.clases.claseserviciosrest.service.InscripcionService;
-import com.co.test.clases.claseserviciosrest.service.MonedaService;
-import com.co.test.clases.claseserviciosrest.service.PaisService;
-import com.co.test.clases.claseserviciosrest.service.ParticipanteService;
+import com.co.test.clases.claseserviciosrest.service.*;
 import com.co.test.clases.claseserviciosrest.utils.ErrorResponse;
+import com.co.test.clases.claseserviciosrest.utils.client.gen.CarreraRequest;
+import com.co.test.clases.claseserviciosrest.utils.client.gen.CarreraResponse;
+import com.co.test.clases.claseserviciosrest.utils.client.gen.CarreraSearch;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,12 +34,18 @@ public class CarreraController {
 
     private final ParticipanteService participanteService;
 
+    private final ResultadoService resultadoService;
     @Autowired
-    public CarreraController(MonedaService monedaService, PaisService paisService, InscripcionService inscripcionService, ParticipanteService participanteService) {
+    public CarreraController(MonedaService monedaService,
+                             PaisService paisService,
+                             InscripcionService inscripcionService,
+                             ParticipanteService participanteService,
+                             ResultadoService resultadoService) {
         this.monedaService = monedaService;
         this.paisService = paisService;
         this.inscripcionService = inscripcionService;
         this.participanteService = participanteService;
+        this.resultadoService = resultadoService;
     }
 
     @PostMapping("createMoneda")
@@ -122,6 +128,16 @@ public class CarreraController {
     @PostMapping("createParticipante")
     public String createParticipante(@RequestBody ParticipanteEntity participanteEntity){
         return  participanteService.createParticipante(participanteEntity);
+    }
+
+    @GetMapping(value = "getResultadoByParticipante/{id}")
+    public CarreraResponse findCarreraByIdParticipante(@PathVariable("id") int id){
+        log.info("datos de entrada Servicio Soap"+ id);
+        CarreraRequest carreraRequest = new CarreraRequest();
+        CarreraSearch carreraSearch = new CarreraSearch();
+        carreraSearch.setIdParticipante(id);
+        carreraRequest.setCarrera(carreraSearch);
+        return resultadoService.findCarreraResult(carreraRequest);
     }
 
     @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
